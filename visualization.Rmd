@@ -6,6 +6,7 @@ output: github_document
 ```{r setup}
 library(tidyverse)
 library(ggridges)
+install.packages("hexbin")
 ```
 
 ```{r}
@@ -85,5 +86,47 @@ hex shaped
 
 ggplot(weather_df, aes(x = tmax, y = tmin)) + 
   geom_hex()
+```
+
+## Univariate plots
+
+Histograms
+Add color on second
+```{r}
+ggplot(weather_df, aes(x = tmax)) + 
+  geom_histogram()
+
+ggplot(weather_df, aes(x = tmax, fill = name)) + 
+  geom_histogram(position = "dodge", binwidth = 2)
+```
+
+```{r}
+ggplot(weather_df, aes(x = tmax, fill = name)) + 
+  geom_density(alpha = .4, adjust = .5, color = "blue")
+```
+
+Box plots 
+
+```{r}
+ggplot(weather_df, aes(x = name, y = tmax)) + geom_boxplot()
+```
+
+Saving plots
+
+```{r}
+weather_plot = ggplot(weather_df, aes(x = tmin, y = tmax)) + 
+  geom_point(aes(color = name), alpha = .5) 
+
+ggsave("weather_plot.pdf", weather_plot, width = 8, height = 5)
+```
+
+Embedding into HTML
+
+```{r}
+
+
+
+ggplot(weather_df, aes(x = tmin, y = tmax)) + 
+  geom_point(aes(color = name))
 ```
 
